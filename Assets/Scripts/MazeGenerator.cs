@@ -7,21 +7,18 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject emptyWallPrefab;
     private GameObject[,] maze = new GameObject[height, width];
-    private MazeCell[,] mazeCells = new MazeCell[height, width];
-    private GameObject nextElement;
-    private Vector3 cellPosition;
-    private MazeCell cell;
+    private MazeCell[,] mazeCells = new MazeCell[height, width];    
+    private Vector3 cellPosition;    
     private const int height = 10;
     private const int width = 10;
-
-    private bool check = false;
-       
     private int needed;
     private int positionX;
     private int positionY;
-    private bool second;
+    private bool isCellExist;
     private int countVisited =0;
     private int i;
+    int nextStepCellX;
+    int nextStepCellY;
 
     private enum Direction
     {
@@ -39,183 +36,79 @@ public class MazeGenerator : MonoBehaviour
 
     private void FirstPass()
     {
-        mazeCells[3, 3].Visited = true;
-        maze[3, 3].gameObject.SetActive(false);        
-        positionX = 3;
-        positionY = 3;        
-        for (i = 0; i < 15; i++)
+        mazeCells[0, 0].Visited = true;
+        maze[0, 0].gameObject.SetActive(false);        
+        positionX = 0;
+        positionY = 0;        
+        for (i = 0; i < 25; i++)
         {
-            VisitingNextCell();
-            Debug.Log($"iteration is {i}");
-            check = false;            
-            //do
-            //{
-            //    VisitingNextCell();                
-            //}
-            //while (check == false);
-            //if (check != true)
-            //{
-            //    i++;
-            //}           
+            VisitingNextCell();                       
         }
     }
 
     private void VisitingNextCell()
-    {
-        needed = Random.Range(1, 5);
-        //CheckingNeighbors(positionX, positionY, 1, Direction.up);
-        //CheckingNeighbors(positionX, positionY, 2, Direction.right);
-        //CheckingNeighbors(positionX, positionY, 1, Direction.down);
-        //CheckingNeighbors(positionX, positionY, 2, Direction.left);
-        if (needed == 1 && positionX + 1 <= width - 1)
-        {
-            countVisited = 0;
-            if (mazeCells[positionX + 1, positionY].Visited == false)
-            {
-                if (positionY + 1 < height)
-                {
-                    if (mazeCells[positionX + 1, positionY + 1].Visited == true)
-                        countVisited++;
-                }
-
-                if (positionY - 1 >= 0)
-                {
-                    if (mazeCells[positionX + 1, positionY - 1].Visited == true)
-                        countVisited++;
-                }
-
-                if (positionX + 2 < width)
-                {
-                    if (mazeCells[positionX + 2, positionY].Visited == true)
-                        countVisited++;
-                }
-
-                if (mazeCells[positionX, positionY].Visited == true)
-                    countVisited++;
-
-                if (countVisited < 2)
-                {
-                    maze[positionX + 1, positionY].gameObject.SetActive(false);
-                    mazeCells[positionX + 1, positionY].Visited = true;
-                    positionX += 1;
-                    check = true;
-                }
-            }
-        }
-
-        if (needed == 2 && positionY + 1 < height)
-        {
-            countVisited = 0;
-            if (mazeCells[positionX, positionY + 1].Visited == false)
-            {
-
-                if (positionY + 2 < height)
-                {
-                    if (mazeCells[positionX, positionY + 2].Visited == true)
-                        countVisited++;
-                }
-
-                if (positionX - 1 >= 0)
-                {
-                    if (mazeCells[positionX - 1, positionY + 1].Visited == true)
-                        countVisited++;
-                }
-
-                if (positionX + 1 < width)
-                {
-                    if (mazeCells[positionX + 1, positionY + 1].Visited == true)
-                        countVisited++;
-                }
-
-                if (mazeCells[positionX, positionY].Visited == true)
-                    countVisited++;
-                if (countVisited < 2)
-                {
-                    maze[positionX, positionY + 1].gameObject.SetActive(false);
-                    mazeCells[positionX, positionY + 1].Visited = true;
-                    positionY += 1;
-                    check = true;
-                }                
-            }
-        }
-
-        if (needed == 3 && positionX - 1 >= 0)
-        {
-            if (mazeCells[positionX - 1, positionY].Visited == false)
-            {
-                maze[positionX - 1, positionY].gameObject.SetActive(false);
-                mazeCells[positionX - 1, positionY].Visited = true;
-                positionX -= 1;
-                check = true;
-            }
-        }
-
-        if (needed == 4 && positionY - 1 >= 0)
-        {
-            if (mazeCells[positionX, positionY - 1].Visited == false)
-            {
-                maze[positionX, positionY - 1].gameObject.SetActive(false);
-                mazeCells[positionX, positionY - 1].Visited = true;
-                positionY -= 1;
-                check = true;
-            }
-        }
-        i++;
-        Debug.Log($"{positionX} and {positionY} and random is {needed}");
+    {        
+        needed = Random.Range(1, 5);        
+        CheckingNeighbors(positionX, positionY, 1, Direction.right);
+        CheckingNeighbors(positionX, positionY, 2, Direction.up);
+        CheckingNeighbors(positionX, positionY, 3, Direction.down);
+        CheckingNeighbors(positionX, positionY, 4, Direction.left);               
     }
 
-    private void CheckingNeighbors( int xPosition, int yPosition, int directionNumber, Direction direction)
+    private void CheckingNeighbors(int xPosition, int yPosition, int directionNumber, Direction direction)
     {
-        
+        countVisited = 0;
         switch (direction)
         {
             case Direction.up:                
-                second = (yPosition + 1 < height);
+                isCellExist = (yPosition + 1 < height);
+                nextStepCellX = xPosition;
+                nextStepCellY = yPosition + 1;
                 break;
             case Direction.right:
-                second = (xPosition + 1 < width);
+                isCellExist = (xPosition + 1 < width);
+                nextStepCellX = xPosition + 1;
+                nextStepCellY = yPosition;
+                             
                 break;
             case Direction.down:
-                second = (yPosition - 1 >= 0);
+                isCellExist = (yPosition - 1 >= 0);
+                nextStepCellX = xPosition;
+                nextStepCellY = yPosition - 1;
+
                 break;
             case Direction.left:
-                second = (xPosition - 1 >= 0);
+                isCellExist = (xPosition - 1 >= 0);
+                nextStepCellX = xPosition - 1;
+                nextStepCellY = yPosition;
                 break;
-        } 
-
-        if (needed == directionNumber && second)
-        {
-            if (mazeCells[xPosition + 1, yPosition].Visited == false)
+        }
+        
+        if (needed == directionNumber && isCellExist)
+        {            
+            if (mazeCells[nextStepCellX, nextStepCellY].Visited == false)
             {
-                if (yPosition + 1 < height)
-                {
-                    if (mazeCells[xPosition + 1, yPosition + 1].Visited == true)
-                        countVisited++;
-                }
-
-                if (yPosition - 1 >= 0)
-                {
-                    if (mazeCells[xPosition + 1, yPosition - 1].Visited == true)
-                        countVisited++;
-                }
-
-                if (xPosition + 2 < width)
-                {
-                    if (mazeCells[xPosition + 2, yPosition].Visited == false)
-                        countVisited++;
-                }
-
-                if (mazeCells[xPosition, yPosition].Visited == false)
-                    countVisited++;
-
+                GetVisitedNeighbor(nextStepCellX + 1, nextStepCellY, nextStepCellX + 1 < width);
+                GetVisitedNeighbor(nextStepCellX, nextStepCellY -1, nextStepCellY - 1 >= 0);                
+                GetVisitedNeighbor(nextStepCellX - 1, nextStepCellY, nextStepCellX - 1 >= 0);
+                GetVisitedNeighbor(nextStepCellX, nextStepCellY + 1, nextStepCellY + 1 < height);
                 if (countVisited < 2)
                 {
-                    maze[xPosition + 1, yPosition].gameObject.SetActive(false);
-                    mazeCells[xPosition + 1, yPosition].Visited = true;
-                    positionX += 1;
-                    check = true;
+                    maze[nextStepCellX, nextStepCellY].gameObject.SetActive(false);
+                    mazeCells[nextStepCellX, nextStepCellY].Visited = true;
+                    positionX = nextStepCellX;
+                    positionY = nextStepCellY;                    
                 }
             }
+        }
+    }
+
+    private void GetVisitedNeighbor(int xPosition, int yPosition, bool condition)
+    {
+        if (condition)
+        {
+            if (mazeCells[xPosition, yPosition].Visited == true)
+                countVisited++;
         }
     }
 
