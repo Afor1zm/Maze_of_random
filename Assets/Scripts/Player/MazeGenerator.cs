@@ -5,8 +5,7 @@ using System.Linq;
 
 public class MazeGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject wallPrefab;
-    [SerializeField] private GameObject emptyWallPrefab;
+    [SerializeField] private GameObject wallPrefab;    
     [SerializeField] private List<MazeCell> removingCells;
     [SerializeField] private List<MazeCell> allCells;
     private GameObject[,] maze = new GameObject[height, width];
