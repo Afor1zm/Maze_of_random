@@ -7,7 +7,8 @@ public class MazeGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject emptyWallPrefab;
-    [SerializeField] private List<MazeCell> cells;
+    [SerializeField] private List<MazeCell> removingCells;
+    [SerializeField] private List<MazeCell> allCells;
     private GameObject[,] maze = new GameObject[height, width];
     private MazeCell[,] mazeCells = new MazeCell[height, width];    
     private Vector3 cellPosition;    
@@ -20,13 +21,14 @@ public class MazeGenerator : MonoBehaviour
     int finishPositionX;
     int finishPositionY;
     bool needed;
+    bool allCellsVisited;
+    bool allRemovingCellsVisited;
 
     void Start()
     {
         CreateMaze();
         CreatingStartMaze(0,0);
-        FirstPass();
-        Debug.Log($"Finish position is {finishPositionX} and {finishPositionY}");
+        FirstPass();        
     }
     private void CreateMaze()
     {
@@ -44,6 +46,7 @@ public class MazeGenerator : MonoBehaviour
                 mazeCells[j, i].Visited = false;
                 mazeCells[j, i].weight = Random.Range(1, 100);
                 cellPosition.x += 1;
+                allCells.Add(mazeCells[j, i]);
             }
             cellPosition.x = 0;
             cellPosition.y += 1;
@@ -56,57 +59,53 @@ public class MazeGenerator : MonoBehaviour
         mazeCells[xPosition, yPosition].weight = 100;
         maze[xPosition, yPosition].gameObject.SetActive(false);
         positionX = xPosition;
-        positionY = yPosition;
+        positionY = yPosition;       
     }
 
     private void FirstPass()
-    {
-        for (i = 0; i < 60; i++)
+    {        
+        do
         {
             finishPositionX = positionX;
             finishPositionY = positionY;
-            Debug.Log($"my position now is {positionX} and {positionY}");
-            VisitingNextCell();
+            GetNeighborWeight(positionX, positionY);
             RemoveWall();
-        }
-        //do
-        //{
-        //    Debug.Log($"my position now is {positionX} and {positionY}");
-        //    VisitingNextCell();
-        //    RemoveWall();
-        //} while (mazeCells.min == 0);
-        
-    }
-    private void VisitingNextCell()
-    {
-        GetNeighborWeight(positionX, positionY);                              
+            allCellsVisited = allCells.All(x => x.Visited == true);
+        } while (!allCellsVisited);
+
     }
 
     private void RemoveWall()
     {
-        if (cells.Count > 0)
+        if (removingCells.Count != 0)
         {
             do
             {
-                needed = false;
-                int minimumWeight = cells.Min(p => p.weight);
-                int minimumWeightIndex = cells.FindIndex(p => p.weight == minimumWeight);
-                if (cells[minimumWeightIndex].Visited == true)
+                allRemovingCellsVisited = removingCells.All(p => p.Visited == true);
+                if (allRemovingCellsVisited)
                 {
-                    cells.Remove(cells[minimumWeightIndex]);
+                    needed = true;
                 }
                 else
                 {
-                    cells[minimumWeightIndex].cellObject.SetActive(false);
-                    cells[minimumWeightIndex].Visited = true;
-                    Debug.Log($"Now i'm removing wall with coordinate {cells[minimumWeightIndex].PositionX} and {cells[minimumWeightIndex].PositionY}");
-                    positionX = cells[minimumWeightIndex].PositionX;
-                    positionY = cells[minimumWeightIndex].PositionY;
-                    cells.Remove(cells[minimumWeightIndex]);
-                    needed = true;
-                }
+                    needed = false;
+                    int minimumWeight = removingCells.Min(p => p.weight);
+                    int minimumWeightIndex = removingCells.FindIndex(p => p.weight == minimumWeight);
+                    if (removingCells[minimumWeightIndex].Visited == true)
+                    {
+                        removingCells.Remove(removingCells[minimumWeightIndex]);
+                    }
+                    else
+                    {
+                        removingCells[minimumWeightIndex].cellObject.SetActive(false);
+                        removingCells[minimumWeightIndex].Visited = true;
+                        positionX = removingCells[minimumWeightIndex].PositionX;
+                        positionY = removingCells[minimumWeightIndex].PositionY;
+                        removingCells.Remove(removingCells[minimumWeightIndex]);
+                        needed = true;
+                    }
+                }                
             } while (needed == false);
-                     
         }
     }
 
@@ -131,7 +130,6 @@ public class MazeGenerator : MonoBehaviour
 
     private void GetNeighborWeight(int xPosition, int yPosition)
     {
-        Debug.Log($"Now i'm checking neighbors of {xPosition} and {yPosition}");
         GetWeight(xPosition + 1, yPosition, xPosition + 1 < width && mazeCells[xPosition + 1, yPosition].Visited == false);
         GetWeight(xPosition, yPosition - 1, yPosition - 1 >= 0 && mazeCells[xPosition, yPosition - 1].Visited == false);
         GetWeight(xPosition - 1, yPosition, xPosition - 1 >= 0 && mazeCells[xPosition - 1, yPosition].Visited == false);
@@ -140,15 +138,13 @@ public class MazeGenerator : MonoBehaviour
 
     private void GetWeight(int xPosition, int yPosition, bool condition)
     {
-        Debug.Log($"Now i'm thinkin about condition {condition}");
-        if (condition)
+       if (condition)
         {
-            Debug.Log($"Now i'm thinkin about countVisit {CheckingNeighbors(xPosition, yPosition)}");
             if (CheckingNeighbors(xPosition, yPosition) <=2)
             {
-                if (!cells.Contains(mazeCells[xPosition, yPosition]))
+                if (!removingCells.Contains(mazeCells[xPosition, yPosition]))
                 {
-                    cells.Add(mazeCells[xPosition, yPosition]);
+                    removingCells.Add(mazeCells[xPosition, yPosition]);
                 }
             }
             else
@@ -156,5 +152,5 @@ public class MazeGenerator : MonoBehaviour
                 mazeCells[xPosition, yPosition].Visited = true;
             }         
         }
-    }   
+    }
 }
