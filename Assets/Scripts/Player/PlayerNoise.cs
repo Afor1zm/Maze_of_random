@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerNoise : MonoBehaviour
 {
     private const int noise = 3;
-    private const float silence = 0.5f;
+    private const float silence = 2f;
     [SerializeField] private float currentNoise = 0f;
     private PlayerMovement currentMovement;
     

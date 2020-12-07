@@ -8,6 +8,7 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private GameObject wallPrefab;    
     [SerializeField] private List<MazeCell> removingCells;
     [SerializeField] private List<MazeCell> allCells;
+    [SerializeField] private List<MazeCell> emptyCells;
     private GameObject[,] maze = new GameObject[height, width];
     private MazeCell[,] mazeCells = new MazeCell[height, width];    
     private Vector3 cellPosition;    
@@ -21,13 +22,14 @@ public class MazeGenerator : MonoBehaviour
     int finishPositionY;
     bool needed;
     bool allCellsVisited;
-    bool allRemovingCellsVisited;
+    bool allRemovingCellsVisited;    
 
-    void Start()
+    void Awake()
     {
         CreateMaze();
         CreatingStartMaze(0,0);
-        FirstPass();        
+        FirstPass();
+        GetEmptyPosition();
     }
     private void CreateMaze()
     {
@@ -57,8 +59,13 @@ public class MazeGenerator : MonoBehaviour
         mazeCells[xPosition, yPosition].Visited = true;
         mazeCells[xPosition, yPosition].weight = 100;
         maze[xPosition, yPosition].gameObject.SetActive(false);
+        emptyCells.Add(mazeCells[xPosition, yPosition]);
+        mazeCells[width-1, height-1].Visited = true;
+        mazeCells[width - 1, height - 1].weight = 100;
+        maze[width - 1, height - 1].gameObject.SetActive(false);
+        emptyCells.Add(mazeCells[width - 1, height - 1]);
         positionX = xPosition;
-        positionY = yPosition;       
+        positionY = yPosition;        
     }
 
     private void FirstPass()
@@ -83,6 +90,7 @@ public class MazeGenerator : MonoBehaviour
                 allRemovingCellsVisited = removingCells.All(p => p.Visited == true);
                 if (allRemovingCellsVisited)
                 {
+                    removingCells.Clear();
                     needed = true;
                 }
                 else
@@ -98,6 +106,7 @@ public class MazeGenerator : MonoBehaviour
                     {
                         removingCells[minimumWeightIndex].cellObject.SetActive(false);
                         removingCells[minimumWeightIndex].Visited = true;
+                        emptyCells.Add(removingCells[minimumWeightIndex]);
                         positionX = removingCells[minimumWeightIndex].PositionX;
                         positionY = removingCells[minimumWeightIndex].PositionY;
                         removingCells.Remove(removingCells[minimumWeightIndex]);
@@ -151,5 +160,15 @@ public class MazeGenerator : MonoBehaviour
                 mazeCells[xPosition, yPosition].Visited = true;
             }         
         }
+    }
+
+    private void GetEmptyPosition()
+    {
+        Debug.Log($"Empty position is {emptyCells[15].PositionX} and {emptyCells[15].PositionY}");
+    }
+
+    public List<MazeCell> GetEmptyList()
+    {
+        return emptyCells;
     }
 }
