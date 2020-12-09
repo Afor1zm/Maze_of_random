@@ -25,7 +25,7 @@ public class FieldOfView : MonoBehaviour
     void DrawFOW()
     {
         float val = 1f / 180f;
-        float radius = 6.0f;
+        float radius = 3.0f;
         int deltaAngle = 15;
 
         Vector3 center = Vector3.zero;

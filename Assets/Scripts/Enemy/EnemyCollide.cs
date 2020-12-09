@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class EnemyCollide : MonoBehaviour
 {
+    private PlayerEvents playerEvents;
+    private void Start()
+    {
+        playerEvents = GetComponent<EnemyListener>().PlayerEvents;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject == collision.gameObject.CompareTag("Player"))
         {
             Debug.Log($"YouLose");
+            playerEvents.OnGameOver();
         }
     }    
 }

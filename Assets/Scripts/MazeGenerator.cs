@@ -62,16 +62,6 @@ public class MazeGenerator : MonoBehaviour
         maze[width - 1, height - 1].gameObject.SetActive(false);
         emptyCells.Add(mazeCells[width - 1, height - 1]);
 
-        mazeCells[width - 1, height - 2].Visited = true;
-        mazeCells[width - 1, height - 2].weight = 100;
-        maze[width - 1, height - 2].gameObject.SetActive(false);
-        emptyCells.Add(mazeCells[width - 1, height - 2]);
-
-        mazeCells[width - 2, height - 1].Visited = true;
-        mazeCells[width - 2, height - 1].weight = 100;
-        maze[width - 2, height - 1].gameObject.SetActive(false);
-        emptyCells.Add(mazeCells[width - 2, height - 1]);
-
         positionX = xPosition;
         positionY = yPosition;        
     }
@@ -82,7 +72,7 @@ public class MazeGenerator : MonoBehaviour
         {            
             GetNeighborWeight(positionX, positionY);
             RemoveWall();
-            allCellsVisited = allCells.All(x => x.Visited == true);
+            allCellsVisited = removingCells.All(x => x.Visited == true);
         } while (!allCellsVisited);
 
     }
@@ -144,10 +134,14 @@ public class MazeGenerator : MonoBehaviour
 
     private void GetNeighborWeight(int xPosition, int yPosition)
     {
-        GetWeight(xPosition + 1, yPosition, xPosition + 1 < width && mazeCells[xPosition + 1, yPosition].Visited == false);
-        GetWeight(xPosition, yPosition - 1, yPosition - 1 >= 0 && mazeCells[xPosition, yPosition - 1].Visited == false);
-        GetWeight(xPosition - 1, yPosition, xPosition - 1 >= 0 && mazeCells[xPosition - 1, yPosition].Visited == false);
-        GetWeight(xPosition, yPosition + 1, yPosition + 1 < height && mazeCells[xPosition, yPosition + 1].Visited == false);
+        //GetWeight(xPosition + 1, yPosition, xPosition + 1 < width && mazeCells[xPosition + 1, yPosition].Visited == false);
+        //GetWeight(xPosition, yPosition - 1, yPosition - 1 >= 0 && mazeCells[xPosition, yPosition - 1].Visited == false);
+        //GetWeight(xPosition - 1, yPosition, xPosition - 1 >= 0 && mazeCells[xPosition - 1, yPosition].Visited == false);
+        //GetWeight(xPosition, yPosition + 1, yPosition + 1 < height && mazeCells[xPosition, yPosition + 1].Visited == false);
+        GetWeight(xPosition + 1, yPosition, xPosition + 1 < width );
+        GetWeight(xPosition, yPosition - 1, yPosition - 1 >= 0 );
+        GetWeight(xPosition - 1, yPosition, xPosition - 1 >= 0 );
+        GetWeight(xPosition, yPosition + 1, yPosition + 1 < height );
     }
 
     private void GetWeight(int xPosition, int yPosition, bool condition)
