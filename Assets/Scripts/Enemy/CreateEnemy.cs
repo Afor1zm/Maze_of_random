@@ -30,7 +30,7 @@ public class CreateEnemy : MonoBehaviour
             randomPatrolCell = freeCell[Random.Range(3, freeCell.Count - 2)];
             patrolPosition = new Vector3(randomPatrolCell.PositionX, -0.2659531f, randomPatrolCell.PositionY);
             enemyObject.GetComponent<EnemyPatrol>().SetPatrolCell(patrolPosition);
-            enemyObject.GetComponent<EnemyListener>().PlayerEvents = playerEvents;                       
+            enemyObject.GetComponent<EnemyListener>().PlayerEvents = playerEvents;            
         }        
     }
 }
