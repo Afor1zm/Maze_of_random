@@ -17,6 +17,10 @@ public class PlayerNoise : MonoBehaviour
     
     void FixedUpdate()
     {
+        if (currentNoise < 0)
+        {
+            currentNoise = 0;
+        }
         if (currentMovement.GetMovementDirection() != new Vector3(0f, 0f, 0f))
         {
             currentNoise += noise * Time.fixedDeltaTime;
@@ -25,10 +29,6 @@ public class PlayerNoise : MonoBehaviour
         {
             if (currentNoise > 0)
             {
-                if(currentNoise < 0)
-                {
-                    currentNoise = 0;
-                }
                 currentNoise -= silence * Time.fixedDeltaTime;
             }
         }

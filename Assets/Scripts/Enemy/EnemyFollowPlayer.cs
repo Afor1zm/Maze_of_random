@@ -4,18 +4,20 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyFollowPlayer : MonoBehaviour
-{   
+{
+    public bool following;
     public Vector3 currentplayerPosition;
     private NavMeshAgent navigationAgent;
-    private const float speed = 1f;
-    public bool following;
+    private const float speed = 1f;    
     private PlayerEvents playerEvents;
+    private Renderer renderer;
    
     private void Start()
     {
         playerEvents = GetComponent<EnemyListener>().PlayerEvents;
         navigationAgent = GetComponent<NavMeshAgent>();       
         navigationAgent.speed = speed;
+        renderer = GetComponent<Renderer>();
         playerEvents.OnNoise += SetPlayerPosition;
     }
     
@@ -32,6 +34,7 @@ public class EnemyFollowPlayer : MonoBehaviour
                 else
                 {                    
                     following = false;
+                    renderer.material.color = new Color32(255, 255, 255, 255);
                 }
             }
         }
@@ -40,6 +43,7 @@ public class EnemyFollowPlayer : MonoBehaviour
 
     public void SetPlayerPosition(Vector3 playerPosition)
     {
+        renderer.material.color = new Color32(255, 0, 107, 255);
         following = true;
         currentplayerPosition = playerPosition;        
     }
