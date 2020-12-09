@@ -10,14 +10,14 @@ public class EnemyFollowPlayer : MonoBehaviour
     private NavMeshAgent navigationAgent;
     private const float speed = 1f;    
     private PlayerEvents playerEvents;
-    private Renderer renderer;
+    private Renderer enemyRenderer;
    
     private void Start()
     {
         playerEvents = GetComponent<EnemyListener>().PlayerEvents;
         navigationAgent = GetComponent<NavMeshAgent>();       
         navigationAgent.speed = speed;
-        renderer = GetComponent<Renderer>();
+        enemyRenderer = GetComponent<Renderer>();
         playerEvents.OnNoise += SetPlayerPosition;
     }
     
@@ -34,7 +34,7 @@ public class EnemyFollowPlayer : MonoBehaviour
                 else
                 {                    
                     following = false;
-                    renderer.material.color = new Color32(255, 255, 255, 255);
+                    enemyRenderer.material.color = new Color32(255, 255, 255, 255);
                 }
             }
         }
@@ -43,7 +43,7 @@ public class EnemyFollowPlayer : MonoBehaviour
 
     public void SetPlayerPosition(Vector3 playerPosition)
     {
-        renderer.material.color = new Color32(255, 0, 107, 255);
+        enemyRenderer.material.color = new Color32(255, 0, 107, 255);
         following = true;
         currentplayerPosition = playerPosition;        
     }

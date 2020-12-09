@@ -6,9 +6,9 @@ using System.Linq;
 public class MazeGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject wallPrefab;    
-    [SerializeField] private List<MazeCell> removingCells;
-    [SerializeField] private List<MazeCell> allCells;
-    [SerializeField] private List<MazeCell> emptyCells;
+    private List<MazeCell> removingCells = new List<MazeCell>();
+    private List<MazeCell> allCells = new List<MazeCell>();
+    private List<MazeCell> emptyCells = new List<MazeCell>();
     private GameObject[,] maze = new GameObject[height, width];
     private MazeCell[,] mazeCells = new MazeCell[height, width];    
     private Vector3 cellPosition;    
@@ -133,11 +133,7 @@ public class MazeGenerator : MonoBehaviour
     }
 
     private void GetNeighborWeight(int xPosition, int yPosition)
-    {
-        //GetWeight(xPosition + 1, yPosition, xPosition + 1 < width && mazeCells[xPosition + 1, yPosition].Visited == false);
-        //GetWeight(xPosition, yPosition - 1, yPosition - 1 >= 0 && mazeCells[xPosition, yPosition - 1].Visited == false);
-        //GetWeight(xPosition - 1, yPosition, xPosition - 1 >= 0 && mazeCells[xPosition - 1, yPosition].Visited == false);
-        //GetWeight(xPosition, yPosition + 1, yPosition + 1 < height && mazeCells[xPosition, yPosition + 1].Visited == false);
+    {        
         GetWeight(xPosition + 1, yPosition, xPosition + 1 < width );
         GetWeight(xPosition, yPosition - 1, yPosition - 1 >= 0 );
         GetWeight(xPosition - 1, yPosition, xPosition - 1 >= 0 );
