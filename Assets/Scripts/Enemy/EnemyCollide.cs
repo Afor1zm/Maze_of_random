@@ -12,8 +12,7 @@ public class EnemyCollide : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject == collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log($"YouLose");
+        {            
             playerEvents.OnGameOver();
         }
     }    

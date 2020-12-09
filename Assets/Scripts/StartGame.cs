@@ -7,15 +7,7 @@ public class StartGame : MonoBehaviour
 {
     [SerializeField] private GameObject startGameView;
     [SerializeField] private GameObject endGameView;
-    [SerializeField] private GameObject winGameView;
-
-    private void Awake()
-    {
-        Time.timeScale = 0;
-        startGameView.SetActive(true);
-        endGameView.SetActive(false);
-        winGameView.SetActive(false);
-    }
+    [SerializeField] private GameObject winGameView;    
 
     public void StartingGame ()
     {
