@@ -9,6 +9,14 @@ public class GameEnds : MonoBehaviour
     [SerializeField] GameObject Winer;
     [SerializeField] GameObject startGame;
 
+    private void Awake()
+    {
+        Time.timeScale = 0;
+        startGame.SetActive(true);
+        gameOver.SetActive(false);
+        Winer.SetActive(false);
+    }
+
     private void Start()
     {
         playerEvents.OnGameOver += GameOver;
@@ -19,6 +27,7 @@ public class GameEnds : MonoBehaviour
     {
         Time.timeScale = 0;
         gameOver.SetActive(true);
+        //
     }
 
     private void WinnerWinnerChickenDinner()
