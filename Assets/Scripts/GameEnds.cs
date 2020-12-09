@@ -7,6 +7,7 @@ public class GameEnds : MonoBehaviour
     [SerializeField] private PlayerEvents playerEvents;
     [SerializeField] GameObject gameOver;
     [SerializeField] GameObject Winer;
+    [SerializeField] GameObject startGame;
 
     private void Start()
     {
