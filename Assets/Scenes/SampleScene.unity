@@ -444,9 +444,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallPrefab: {fileID: 5429533871695019102, guid: c6076916ac4338d48985a8200d5755c9,
     type: 3}
-  removingCells: []
-  allCells: []
-  emptyCells: []
 --- !u!4 &219620600
 Transform:
   m_ObjectHideFlags: 0
