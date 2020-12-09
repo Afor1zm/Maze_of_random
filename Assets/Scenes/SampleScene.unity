@@ -752,7 +752,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.083333336
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: 3ed1ebf4efb4d7b4c809e645ffe2dcc1, type: 2}
 --- !u!4 &1114000730
@@ -873,6 +873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1746672593}
   - component: {fileID: 1746672592}
+  - component: {fileID: 1746672594}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -896,6 +897,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8808734894301377842, guid: 997a42e2b2d72ae4f94ef68c6607fbb4,
     type: 3}
   mazeGenerator: {fileID: 219620598}
+  playerEvents: {fileID: 1746672594}
 --- !u!4 &1746672593
 Transform:
   m_ObjectHideFlags: 0
@@ -910,6 +912,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1746672594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746672591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b74f865980997d4898116ea56818c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1756804357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1031,6 +1045,16 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1312139006919629059, guid: 4c629595c3348644a81937a51c816e3a,
+        type: 3}
+      propertyPath: gameEvents
+      value: 
+      objectReference: {fileID: 1746672594}
+    - target: {fileID: 1312139006919629059, guid: 4c629595c3348644a81937a51c816e3a,
+        type: 3}
+      propertyPath: playerEvents
+      value: 
+      objectReference: {fileID: 1746672594}
     - target: {fileID: 1312139006919629061, guid: 4c629595c3348644a81937a51c816e3a,
         type: 3}
       propertyPath: m_LocalPosition.x

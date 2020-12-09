@@ -7,6 +7,7 @@ public class CreateEnemy : MonoBehaviour
     [SerializeField] private List<MazeCell> freeCell = new List<MazeCell>();
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject mazeGenerator;
+    [SerializeField] private PlayerEvents playerEvents;
     private GameObject enemyObject;
     private MazeCell randomSpawnCell;
     private Vector3 spawnPosition;
@@ -29,6 +30,7 @@ public class CreateEnemy : MonoBehaviour
             randomPatrolCell = freeCell[Random.Range(3, freeCell.Count - 2)];
             patrolPosition = new Vector3(randomPatrolCell.PositionX, -0.2659531f, randomPatrolCell.PositionY);
             enemyObject.GetComponent<EnemyPatrol>().SetPatrolCell(patrolPosition);
+            enemyObject.GetComponent<EnemyListener>().PlayerEvents = playerEvents;                       
         }        
     }
 }

@@ -67,6 +67,11 @@ public class MazeGenerator : MonoBehaviour
         maze[width - 1, height - 2].gameObject.SetActive(false);
         emptyCells.Add(mazeCells[width - 1, height - 2]);
 
+        mazeCells[width - 2, height - 1].Visited = true;
+        mazeCells[width - 2, height - 1].weight = 100;
+        maze[width - 2, height - 1].gameObject.SetActive(false);
+        emptyCells.Add(mazeCells[width - 2, height - 1]);
+
         positionX = xPosition;
         positionY = yPosition;        
     }

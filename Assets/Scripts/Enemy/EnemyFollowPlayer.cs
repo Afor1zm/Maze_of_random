@@ -4,17 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyFollowPlayer : MonoBehaviour
-{
-    //public GameObject player;
+{   
     public Vector3 currentplayerPosition;
     private NavMeshAgent navigationAgent;
     private const float speed = 1f;
     public bool following;
+    private PlayerEvents playerEvents;
    
     private void Start()
     {
+        playerEvents = GetComponent<EnemyListener>().PlayerEvents;
         navigationAgent = GetComponent<NavMeshAgent>();       
-        navigationAgent.speed = speed;        
+        navigationAgent.speed = speed;
+        playerEvents.OnNoise += SetPlayerPosition;
     }
     
     void FixedUpdate()
@@ -24,13 +26,11 @@ public class EnemyFollowPlayer : MonoBehaviour
             if (currentplayerPosition != new Vector3(0, 0, 0))
             {
                 if (transform.position != currentplayerPosition)
-                {
-                    //playerPosition = player.transform.position;
+                {                    
                     navigationAgent.SetDestination(currentplayerPosition);
                 }
                 else
-                {
-                    Debug.Log($"Im on position");
+                {                    
                     following = false;
                 }
             }
@@ -40,7 +40,7 @@ public class EnemyFollowPlayer : MonoBehaviour
 
     public void SetPlayerPosition(Vector3 playerPosition)
     {
-        currentplayerPosition = playerPosition;
-        Debug.Log($"Start follow");
+        following = true;
+        currentplayerPosition = playerPosition;        
     }
 }

@@ -8,6 +8,7 @@ public class PlayerNoise : MonoBehaviour
     private const float silence = 2f;
     [SerializeField] private float currentNoise = 0f;
     private PlayerMovement currentMovement;
+    public PlayerEvents playerEvents;
     
     void Start()
     {       
@@ -24,17 +25,21 @@ public class PlayerNoise : MonoBehaviour
         {
             if (currentNoise > 0)
             {
+                if(currentNoise < 0)
+                {
+                    currentNoise = 0;
+                }
                 currentNoise -= silence * Time.fixedDeltaTime;
             }
         }
         if (currentNoise >= 10)
         {
-            //gameEvents.OnNoise();
+            playerEvents.OnNoise(transform.position);
         }
     }
 
-    public Transform GetPlayerPosition()
+    public float GetPlayerNoise()
     {
-        return transform;
+        return currentNoise;
     }
 }

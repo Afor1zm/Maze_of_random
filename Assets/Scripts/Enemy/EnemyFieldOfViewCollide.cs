@@ -16,8 +16,7 @@ public class EnemyFieldOfViewCollide : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject == other.gameObject.CompareTag("Player"))
-        {
-            //folowPlayer.player = other.gameObject;
+        {            
             patrol.FollowingPlayer = true;
             folowPlayer.following = true;
             folowPlayer.SetPlayerPosition(other.gameObject.transform.position);
@@ -26,8 +25,7 @@ public class EnemyFieldOfViewCollide : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject == other.gameObject.CompareTag("Player"))
-        {
-            //folowPlayer.player = other.gameObject;
+        {            
             patrol.FollowingPlayer = false;            
             folowPlayer.SetPlayerPosition(other.gameObject.transform.position);
         }
