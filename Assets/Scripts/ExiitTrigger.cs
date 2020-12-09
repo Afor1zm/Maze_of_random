@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ExiitTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-
     private void OnTriggerEnter(Collider other)
     {        
         if (other.gameObject == other.CompareTag("Player"))

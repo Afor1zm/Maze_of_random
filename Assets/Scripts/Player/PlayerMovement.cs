@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float xDirection = Input.GetAxis("Horizontal");
         float yDirection = Input.GetAxis("Vertical");
-        moveDirection = new Vector3(xDirection, yDirection, 0);        
+        moveDirection = new Vector3(xDirection, 0, yDirection);        
         transform.position += moveDirection * speed * Time.fixedDeltaTime;
     }
 

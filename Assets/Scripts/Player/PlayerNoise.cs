@@ -10,7 +10,7 @@ public class PlayerNoise : MonoBehaviour
     private PlayerMovement currentMovement;
     
     void Start()
-    {
+    {       
         currentMovement = GetComponent<PlayerMovement>();
     }
     
@@ -27,5 +27,14 @@ public class PlayerNoise : MonoBehaviour
                 currentNoise -= silence * Time.fixedDeltaTime;
             }
         }
+        if (currentNoise >= 10)
+        {
+            //gameEvents.OnNoise();
+        }
+    }
+
+    public Transform GetPlayerPosition()
+    {
+        return transform;
     }
 }

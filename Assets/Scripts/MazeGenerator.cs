@@ -16,10 +16,7 @@ public class MazeGenerator : MonoBehaviour
     private const int width = 10;    
     private int positionX;
     private int positionY;
-    private int countVisited = 0;
-    private int i;
-    int finishPositionX;
-    int finishPositionY;
+    private int countVisited = 0;    
     bool needed;
     bool allCellsVisited;
     bool allRemovingCellsVisited;    
@@ -28,8 +25,7 @@ public class MazeGenerator : MonoBehaviour
     {
         CreateMaze();
         CreatingStartMaze(0,0);
-        FirstPass();
-        GetEmptyPosition();
+        FirstPass();        
     }
     private void CreateMaze()
     {
@@ -50,7 +46,7 @@ public class MazeGenerator : MonoBehaviour
                 allCells.Add(mazeCells[j, i]);
             }
             cellPosition.x = 0;
-            cellPosition.y += 1;
+            cellPosition.z += 1;
         }
     }
 
@@ -60,10 +56,17 @@ public class MazeGenerator : MonoBehaviour
         mazeCells[xPosition, yPosition].weight = 100;
         maze[xPosition, yPosition].gameObject.SetActive(false);
         emptyCells.Add(mazeCells[xPosition, yPosition]);
+
         mazeCells[width-1, height-1].Visited = true;
         mazeCells[width - 1, height - 1].weight = 100;
         maze[width - 1, height - 1].gameObject.SetActive(false);
         emptyCells.Add(mazeCells[width - 1, height - 1]);
+
+        mazeCells[width - 1, height - 2].Visited = true;
+        mazeCells[width - 1, height - 2].weight = 100;
+        maze[width - 1, height - 2].gameObject.SetActive(false);
+        emptyCells.Add(mazeCells[width - 1, height - 2]);
+
         positionX = xPosition;
         positionY = yPosition;        
     }
@@ -71,9 +74,7 @@ public class MazeGenerator : MonoBehaviour
     private void FirstPass()
     {        
         do
-        {
-            finishPositionX = positionX;
-            finishPositionY = positionY;
+        {            
             GetNeighborWeight(positionX, positionY);
             RemoveWall();
             allCellsVisited = allCells.All(x => x.Visited == true);
@@ -160,11 +161,6 @@ public class MazeGenerator : MonoBehaviour
                 mazeCells[xPosition, yPosition].Visited = true;
             }         
         }
-    }
-
-    private void GetEmptyPosition()
-    {
-        Debug.Log($"Empty position is {emptyCells[15].PositionX} and {emptyCells[15].PositionY}");
     }
 
     public List<MazeCell> GetEmptyList()
