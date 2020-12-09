@@ -45,6 +45,7 @@ public class MazeGenerator : MonoBehaviour
     {
         return height;
     }
+
     public int GetWidth()
     {
         return width;

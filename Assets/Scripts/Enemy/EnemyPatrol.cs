@@ -6,20 +6,27 @@ using UnityEngine.AI;
 public class EnemyPatrol : MonoBehaviour
 {   
     private NavMeshAgent navigationAgent;
-    [SerializeField] private Vector3 startPosition;
-    [SerializeField] private Vector3 patrolPosition;
-    [SerializeField] private Vector3 bufferPosition;    
+    private Vector3 startPosition;
+    private Vector3 patrolPosition;
+    private Vector3 bufferPosition;    
     private const float speed = 1f;
-    public bool FollowingPlayer;
-
+    private bool FollowingPlayer;
+    private PlayerEvents playerEvents;
+    private PlayerEvents publicPlayerEvents;
 
     private void Start()
     {
         FollowingPlayer = false;
         navigationAgent = GetComponent<NavMeshAgent>();
+        playerEvents = GetComponent<PlayerEvents>();
+        publicPlayerEvents = GetComponent<EnemyListener>().PlayerEvents;
         navigationAgent.speed = speed;        
         startPosition = transform.position;        
-        bufferPosition = patrolPosition;       
+        bufferPosition = patrolPosition;
+        playerEvents.OnDetected += StopPatrol;
+        playerEvents.OnNoise += StopPatrol;
+        playerEvents.OnSectorChecked += ContinuePatrol;
+        publicPlayerEvents.OnSectorChecked += ContinuePatrol;
     }
 
     private void FixedUpdate()
@@ -48,9 +55,14 @@ public class EnemyPatrol : MonoBehaviour
     {
         patrolPosition = new Vector3(patrolCell.x, -0.2659531f, patrolCell.z);
     }
-
-    public void SetFollowingPlayer(bool OnFollow)
+    
+    private void StopPatrol(Vector3 vector)
     {
-        FollowingPlayer = OnFollow;
+        FollowingPlayer = true;
+    }
+
+    private void ContinuePatrol()
+    {
+        FollowingPlayer = false;
     }
 }

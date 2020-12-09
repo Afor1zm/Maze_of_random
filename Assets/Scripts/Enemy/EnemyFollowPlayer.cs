@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyFollowPlayer : MonoBehaviour
 {
-    public bool following;
-    public Vector3 currentplayerPosition;
+    private bool following;
+    private Vector3 currentplayerPosition;
     private NavMeshAgent navigationAgent;
     private const float speed = 1f;    
     private PlayerEvents playerEvents;
