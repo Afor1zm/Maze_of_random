@@ -12,17 +12,17 @@ public class CreateStartAndFinish : MonoBehaviour, ICreatingDestination
     public void CreatingStartMaze(int xPosition, int yPosition)
     {
         mazeGenerator = GetComponent<MazeGenerator>();
-        mazeGenerator.mazeCells[xPosition, yPosition].Visited = true;
-        mazeGenerator.mazeCells[xPosition, yPosition].weight = 100;
-        mazeGenerator.maze[xPosition, yPosition].gameObject.SetActive(false);
-        mazeGenerator.emptyCells.Add(mazeGenerator.mazeCells[xPosition, yPosition]);
+        mazeGenerator._mazeCells[xPosition, yPosition].Visited = true;
+        mazeGenerator._mazeCells[xPosition, yPosition].weight = 100;
+        mazeGenerator._maze[xPosition, yPosition].gameObject.SetActive(false);
+        mazeGenerator._emptyCells.Add(mazeGenerator._mazeCells[xPosition, yPosition]);
 
-        mazeGenerator.mazeCells[mazeGenerator.GetWidth() - 1, mazeGenerator.GetHeight() - 1].Visited = true;
-        mazeGenerator.mazeCells[mazeGenerator.GetWidth() - 1, mazeGenerator.GetHeight() - 1].weight = 100;
-        mazeGenerator.maze[mazeGenerator.GetWidth() - 1, mazeGenerator.GetHeight() - 1].gameObject.SetActive(false);
-        mazeGenerator.emptyCells.Add(mazeGenerator.mazeCells[mazeGenerator.GetWidth() - 1, mazeGenerator.GetHeight() - 1]);
+        mazeGenerator._mazeCells[mazeGenerator.GetWidth() - 1, mazeGenerator.GetHeight() - 1].Visited = true;
+        mazeGenerator._mazeCells[mazeGenerator.GetWidth() - 1, mazeGenerator.GetHeight() - 1].weight = 100;
+        mazeGenerator._maze[mazeGenerator.GetWidth() - 1, mazeGenerator.GetHeight() - 1].gameObject.SetActive(false);
+        mazeGenerator._emptyCells.Add(mazeGenerator._mazeCells[mazeGenerator.GetWidth() - 1, mazeGenerator.GetHeight() - 1]);
 
-        mazeGenerator.positionX = xPosition;
-        mazeGenerator.positionY = yPosition;
+        mazeGenerator._positionX = xPosition;
+        mazeGenerator._positionY = yPosition;
     }
 }

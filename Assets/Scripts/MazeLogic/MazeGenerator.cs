@@ -5,15 +5,15 @@ using System.Linq;
 
 public class MazeGenerator : MonoBehaviour
 {
-    public List<MazeCell> removingCells = new List<MazeCell>();
-    public MazeCell[,] mazeCells = new MazeCell[height, width];
-    public List<MazeCell> emptyCells = new List<MazeCell>();
-    public int positionX;
-    public int positionY;
-    public GameObject[,] maze = new GameObject[height, width];
-    public const int height = 10;
-    public const int width = 10;      
-    public List<MazeCell> allCells = new List<MazeCell>();    
+    public List<MazeCell> _removingCells = new List<MazeCell>();
+    public MazeCell[,] _mazeCells = new MazeCell[_height, _width];
+    public List<MazeCell> _emptyCells = new List<MazeCell>();
+    public int _positionX;
+    public int _positionY;
+    public GameObject[,] _maze = new GameObject[_height, _width];
+    public const int _height = 10;
+    public const int _width = 10;      
+    public List<MazeCell> _allCells = new List<MazeCell>();    
     private bool allCellsVisited;
     private INeighbors neighbors;
     private IRemoveWall removeWall;
@@ -35,19 +35,19 @@ public class MazeGenerator : MonoBehaviour
     {
         do
         {
-            neighbors.GetNeighborWeight(positionX, positionY);
+            neighbors.GetNeighborWeight(_positionX, _positionY);
             removeWall.RemovingWall();
-            allCellsVisited = removingCells.All(x => x.Visited == true);
+            allCellsVisited = _removingCells.All(x => x.Visited == true);
         } while (!allCellsVisited);
     }
 
     public int GetHeight()
     {
-        return height;
+        return _height;
     }
 
     public int GetWidth()
     {
-        return width;
+        return _width;
     }
 }

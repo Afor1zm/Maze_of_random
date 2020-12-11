@@ -37,9 +37,9 @@ public class RemoveWall : MonoBehaviour, IRemoveWall
                     {
                         mazeGenerator.removingCells[minimumWeightIndex].cellObject.SetActive(false);
                         mazeGenerator.removingCells[minimumWeightIndex].Visited = true;
-                        mazeGenerator.emptyCells.Add(mazeGenerator.removingCells[minimumWeightIndex]);
-                        mazeGenerator.positionX = mazeGenerator.removingCells[minimumWeightIndex].PositionX;
-                        mazeGenerator.positionY = mazeGenerator.removingCells[minimumWeightIndex].PositionY;
+                        mazeGenerator._emptyCells.Add(mazeGenerator.removingCells[minimumWeightIndex]);
+                        mazeGenerator._positionX = mazeGenerator.removingCells[minimumWeightIndex].PositionX;
+                        mazeGenerator._positionY = mazeGenerator.removingCells[minimumWeightIndex].PositionY;
                         mazeGenerator.removingCells.Remove(mazeGenerator.removingCells[minimumWeightIndex]);
                         needed = true;
                     }

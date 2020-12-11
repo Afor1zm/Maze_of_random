@@ -28,7 +28,7 @@ public class Neighbors : MonoBehaviour, INeighbors
         mazeGenerator = GetComponent<MazeGenerator>();
         if (condition)
         {
-            if (mazeGenerator.mazeCells[xPosition, yPosition].Visited == true)
+            if (mazeGenerator._mazeCells[xPosition, yPosition].Visited == true)
                 countVisited++;
         }
     }
@@ -48,14 +48,14 @@ public class Neighbors : MonoBehaviour, INeighbors
         {
             if (CheckingNeighbors(xPosition, yPosition) <= 2)
             {
-                if (!mazeGenerator.removingCells.Contains(mazeGenerator.mazeCells[xPosition, yPosition]))
+                if (!mazeGenerator.removingCells.Contains(mazeGenerator._mazeCells[xPosition, yPosition]))
                 {
-                    mazeGenerator.removingCells.Add(mazeGenerator.mazeCells[xPosition, yPosition]);
+                    mazeGenerator.removingCells.Add(mazeGenerator._mazeCells[xPosition, yPosition]);
                 }
             }
             else
             {
-                mazeGenerator.mazeCells[xPosition, yPosition].Visited = true;
+                mazeGenerator._mazeCells[xPosition, yPosition].Visited = true;
             }
         }
     }

@@ -16,7 +16,7 @@ public class CreateEnemy : MonoBehaviour
 
     private void Start()
     {        
-        freeCell = mazeGenerator.GetComponent<MazeGenerator>().emptyCells;
+        freeCell = mazeGenerator.GetComponent<MazeGenerator>()._emptyCells;
         InstantiateEnemy(2);
     }
 
